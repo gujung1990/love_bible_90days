@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="theme-color" content="#4A76A8">
+    <title>90일 성경통독</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        }
+        body {
+            margin: 0;
+            padding: 16px;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 540px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        h1 {
+            color: #4A76A8;
+            margin-bottom: 8px;
+            font-size: 24px;
+        }
+        .today-card {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+        }
+        .today-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #4A76A8;
+        }
+        .today-date {
+            font-size: 18px;
+            margin-bottom: 16px;
+            font-weight: bold;
+        }
+        .today-daynum {
+            font-size: 22px;
+            margin-bottom: 12px;
+            color: #E67700;
+            font-weight: bold;
+        }
+        .today-reading {
+            font-size: 16px;
+            margin-bottom: 20px;
+            background-color: #f0f7ff;
+            padding: 10px;
+            border-radius: 8px;
+            display: inline-block;
+            min-width: 80%;
+        }
+        .listen-btn {
+            display: inline-block;
+            background-color: #4A76A8;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: background-color 0.2s;
+            margin-top: 10px;
+        }
+        .listen-btn:hover, .listen-btn:active {
+            background-color: #3A5F8A;
+        }
+        .toggle-btn {
+            display: block;
+            width: 100%;
+            background-color: #f2f2f2;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #555;
+        }
+.schedule-list {
+            background-color: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .day-item {
+            padding: 16px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .day-item:last-child {
+            border-bottom: none;
+        }
+        .day-info {
+            flex: 1;
+        }
+        .day-date {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .day-number {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        .day-reading {
+            font-size: 14px;
+            color: #0056b3;
+            background-color: #f0f7ff;
+            padding: 6px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 4px;
+        }
+        .day-link {
+            background-color: #E7F0FB;
+            color: #4A76A8;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+        .today-item {
+            background-color: #FFF9E6;
+        }
+        .hidden {
+            display: none;
+        }
+        footer {
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+            margin-top: 32px;
+        }
+        
+        /* 진행률 표시 스타일 */
+        .progress-container {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        .progress-text {
+            text-align: center;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #666;
+        }
+        .progress-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: #4A76A8;
+            width: 0%;
+            border-radius: 5px;
+        }
+        
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+        }
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+        .stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #4A76A8;
+            margin-bottom: 5px;
+        }
+        .stat-label {
+            font-size: 13px;
+            color: #777;
+        }
+        
+        .warning-message {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style
+<body>
+    <div class="container">
+        <header>
+            <h1>90일 성경통독</h1>
+            <p>매일 성경 말씀과 함께하는 90일</p>
+        </header>
+        
+        <div id="warningMessage" class="warning-message hidden">
+            날짜가 범위를 벗어났습니다. 가장 가까운 날짜의 정보를 표시합니다.
+        </div>
+        
+        <div class="today-card" id="todayCard">
+            <div class="today-title">오늘의 성경통독</div>
+            <div id="todayInfo" class="today-date">2025-05-13 (화요일)</div>
+            <div id="todayDayNum" class="today-daynum">62일</div>
+            <div id="todayReading" class="today-reading">스바냐 1-3장, 학개 1-2장, 스가랴 1-7장</div>
+            
+            <a id="todayLink" href="https://www.youtube.com/watch?v=jOxLN7Y9D6Q&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=62" target="_blank" class="listen-btn">
+                오늘 성경통독 듣기
+            </a>
+            
+            <!-- 진행률 표시 -->
+            <div class="progress-container">
+                <div class="progress-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="currentDay">62</div>
+                        <div class="stat-label">현재 일차</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">90</div>
+                        <div class="stat-label">총 일수</div>
+                    </div>
+                </div>
+                <div class="progress-text">진행률: <span id="progressPercent">69</span>%</div>
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill" style="width: 69%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <button id="toggleBtn" class="toggle-btn" onclick="toggleSchedule()">전체 일정 보기</button>
+</head>
+<div id="scheduleList" class="schedule-list hidden">
+            <!-- 1일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-03-13 (목요일)</div>
+                    <div class="day-number">1일</div>
+                    <div class="day-reading">창세기 1-11장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=DDoJCVm12FA&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=1" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 2일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-03-14 (금요일)</div>
+                    <div class="day-number">2일</div>
+                    <div class="day-reading">창세기 12-25장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=7smKY88TO8Q&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=2" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 3일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-03-15 (토요일)</div>
+                    <div class="day-number">3일</div>
+                    <div class="day-reading">창세기 26-36장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=1Bm3NLDOraI&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=3" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 4일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-03-16 (일요일)</div>
+                    <div class="day-number">4일</div>
+                    <div class="day-reading">창세기 37-50장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=IzU8Ga0nHTk&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=4" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 5일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-03-17 (월요일)</div>
+                    <div class="day-number">5일</div>
+                    <div class="day-reading">출애굽기 1-12장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=BUrHU220mxk&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=5" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 6일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-03-18 (화요일)</div>
+                    <div class="day-number">6일</div>
+                    <div class="day-reading">출애굽기 13-24장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=tsriC7jED9c&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=6" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 7일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-03-19 (수요일)</div>
+                    <div class="day-number">7일</div>
+                    <div class="day-reading">출애굽기 25-40장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=fMI8HVqXy_o&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=7" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 8일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-03-20 (목요일)</div>
+                    <div class="day-number">8일</div>
+                    <div class="day-reading">레위기 1-14장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=imi9hFg32WE&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=8" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 9일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-03-21 (금요일)</div>
+                    <div class="day-number">9일</div>
+                    <div class="day-reading">레위기 15-27장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=g2t_je7t1qw&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=9" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 10일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-03-22 (토요일)</div>
+                    <div class="day-number">10일</div>
+                    <div class="day-reading">민수기 1-14장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=JcucfO0OjXw&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=10" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 11일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-03-23 (일요일)</div>
+                    <div class="day-number">11일</div>
+                    <div class="day-reading">민수기 15-36장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=DSb3u8gEifc&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=11" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 12일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-03-24 (월요일)</div>
+                    <div class="day-number">12일</div>
+                    <div class="day-reading">신명기 1-16장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=Fp3NnoZnumE&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=12" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 13일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-03-25 (화요일)</div>
+                    <div class="day-number">13일</div>
+                    <div class="day-reading">신명기 17-34장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=Crz_51hJFe0&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=13" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 14일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-03-26 (수요일)</div>
+                    <div class="day-number">14일</div>
+                    <div class="day-reading">여호수아 1-12장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=UozJUiSSkHQ&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=14" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 15일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-03-27 (목요일)</div>
+                    <div class="day-number">15일</div>
+                    <div class="day-reading">여호수아 13-24장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=TfTbXJAMfco&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=15" target="_blank" class="day-link">듣기</a>
+            </div>
+<!-- 16일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-03-28 (금요일)</div>
+                    <div class="day-number">16일</div>
+                    <div class="day-reading">사사기 1-11장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=8FEPk1a8N_E&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=16" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 17일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-03-29 (토요일)</div>
+                    <div class="day-number">17일</div>
+                    <div class="day-reading">사사기 12-21장, 룻기 1-4장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=va_bgC7gXiM&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=17" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 18일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-03-30 (일요일)</div>
+                    <div class="day-number">18일</div>
+                    <div class="day-reading">사무엘상 1-15장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=I65Gmajmy_Q&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=18" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 19일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-03-31 (월요일)</div>
+                    <div class="day-number">19일</div>
+                    <div class="day-reading">사무엘상 16-31장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=pb6ksoLwJdA&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=19" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 20일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-01 (화요일)</div>
+                    <div class="day-number">20일</div>
+                    <div class="day-reading">사무엘하 1-12장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=qfCW8XDSfcs&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=20" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 21일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-02 (수요일)</div>
+                    <div class="day-number">21일</div>
+                    <div class="day-reading">사무엘하 13-24장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=UWng_P3mxGI&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=21" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 22일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-03 (목요일)</div>
+                    <div class="day-number">22일</div>
+                    <div class="day-reading">열왕기상 1-11장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=nJntbe15T4Q&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=22" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 23일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-04 (금요일)</div>
+                    <div class="day-number">23일</div>
+                    <div class="day-reading">열왕기상 12-22장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=SxubkslKiAw&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=23" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 24일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-05 (토요일)</div>
+                    <div class="day-number">24일</div>
+                    <div class="day-reading">열왕기하 1-13장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=I9AkQw7wjGk&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=24" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 25일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-06 (일요일)</div>
+                    <div class="day-number">25일</div>
+                    <div class="day-reading">열왕기하 14-25장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=_rZqvy4Z0vM&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=25" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 26일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-07 (월요일)</div>
+                    <div class="day-number">26일</div>
+                    <div class="day-reading">역대상 1-10장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=bM8lhcPLnx4&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=26" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 27일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-08 (화요일)</div>
+                    <div class="day-number">27일</div>
+                    <div class="day-reading">역대상 11-29장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=NrnPC_rfMU8&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=27" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 28일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-09 (수요일)</div>
+                    <div class="day-number">28일</div>
+                    <div class="day-reading">역대하 1-15장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=2AT9f4yvxfo&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=28" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 29일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-10 (목요일)</div>
+                    <div class="day-number">29일</div>
+                    <div class="day-reading">역대하 16-36장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=AbeC-DEamg0&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=29" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+         <!-- 30일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-11 (금요일)</div>
+                    <div class="day-number">30일</div>
+                    <div class="day-reading">에스라 1-10장, 느헤미야 1-3장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=GrJe1FgGpEk&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=30" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 31일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-12 (토요일)</div>
+                    <div class="day-number">31일</div>
+                    <div class="day-reading">느헤미야 4-13장, 에스더 1-2장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=RE6o8eRs98I&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=31" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 32일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-13 (일요일)</div>
+                    <div class="day-number">32일</div>
+                    <div class="day-reading">에스더 3-10장, 욥기 1-5장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=8sqvdhVzB3o&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=32" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 33일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-14 (월요일)</div>
+                    <div class="day-number">33일</div>
+                    <div class="day-reading">욥기 6-23장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=Zx5igw6Q098&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=33" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 34일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-15 (화요일)</div>
+                    <div class="day-number">34일</div>
+                    <div class="day-reading">욥기 24-42장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=c_NsAiC9auA&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=34" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 35일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-16 (수요일)</div>
+                    <div class="day-number">35일</div>
+                    <div class="day-reading">시편 1-24편</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=NaCk5ifblAc&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=35" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 36일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-17 (목요일)</div>
+                    <div class="day-number">36일</div>
+                    <div class="day-reading">시편 25-44편</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=HMetejrBYDs&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=36" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 37일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-18 (금요일)</div>
+                    <div class="day-number">37일</div>
+                    <div class="day-reading">시편 45-69편</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=N7177iBt8ds&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=37" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 38일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-19 (토요일)</div>
+                    <div class="day-number">38일</div>
+                    <div class="day-reading">시편 70-89편</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=Txlc_qNvrmo&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=38" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 39일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-20 (일요일)</div>
+                    <div class="day-number">39일</div>
+                    <div class="day-reading">시편 90-109편</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=8WVebB9GCao&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=39" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 40일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-21 (월요일)</div>
+                    <div class="day-number">40일</div>
+                    <div class="day-reading">시편 110-134편</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=adormREazoE&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=40" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 41일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-22 (화요일)</div>
+                    <div class="day-number">41일</div>
+                    <div class="day-reading">시편 135-150편, 잠언 1-4장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=Ui94Ftv_rQo&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=41" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 42일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-23 (수요일)</div>
+                    <div class="day-number">42일</div>
+                    <div class="day-reading">잠언 5-18장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=zcFEytEIfso&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=42" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 43일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-24 (목요일)</div>
+                    <div class="day-number">43일</div>
+                    <div class="day-reading">잠언 19-31장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=-7P14xhGzCo&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=43" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 44일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-25 (금요일)</div>
+                    <div class="day-number">44일</div>
+                    <div class="day-reading">전도서 1-12장, 아가 1-8장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=mDgEyX08sTQ&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=44" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 45일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-26 (토요일)</div>
+                    <div class="day-number">45일</div>
+                    <div class="day-reading">이사야 1-12장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=7U6xMJ_pJv8&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=45" target="_blank" class="day-link">듣기</a>
+            </div>
+<!-- 46일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-27 (일요일)</div>
+                    <div class="day-number">46일</div>
+                    <div class="day-reading">이사야 13-27장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=-QcoqQZXN0Q&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=46" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 47일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-28 (월요일)</div>
+                    <div class="day-number">47일</div>
+                    <div class="day-reading">이사야 28-41장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=catFDSQToNI&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=47" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 48일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-29 (화요일)</div>
+                    <div class="day-number">48일</div>
+                    <div class="day-reading">이사야 42-55장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=N6iRvHorD34&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=48" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 49일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-04-30 (수요일)</div>
+                    <div class="day-number">49일</div>
+                    <div class="day-reading">이사야 56-66장, 예레미야 1-2장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=G62SmEuOkpM&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=49" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 50일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-01 (목요일)</div>
+                    <div class="day-number">50일</div>
+                    <div class="day-reading">예레미야 3-16장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=sw1ihmCV_UE&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=50" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 51일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-02 (금요일)</div>
+                    <div class="day-number">51일</div>
+                    <div class="day-reading">예레미야 17-30장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=5rr_Rh85JYs&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=51" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 52일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-03 (토요일)</div>
+                    <div class="day-number">52일</div>
+                    <div class="day-reading">예레미야 31-42장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=lBniMVpxbOA&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=52" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 53일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-04 (일요일)</div>
+                    <div class="day-number">53일</div>
+                    <div class="day-reading">예레미야 43-52장, 예레미야애가 1-2장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=m3mA5PGH8Yw&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=53" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 54일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-05 (월요일)</div>
+                    <div class="day-number">54일</div>
+                    <div class="day-reading">예레미야애가 3-5장, 에스겔 1-10장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=CBrYIhSUeOc&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=54" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 55일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-06 (화요일)</div>
+                    <div class="day-number">55일</div>
+                    <div class="day-reading">에스겔 11-23장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=ts0LjALAcJI&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=55" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 56일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-07 (수요일)</div>
+                    <div class="day-number">56일</div>
+                    <div class="day-reading">에스겔 24-36장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=sdK4XqQyWfo&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=56" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 57일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-08 (목요일)</div>
+                    <div class="day-number">57일</div>
+                    <div class="day-reading">에스겔 37-48장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=wDHxIHuNko8&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=57" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 58일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-09 (금요일)</div>
+                    <div class="day-number">58일</div>
+                    <div class="day-reading">다니엘 1-12장, 호세아 1-3장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=VxPujzkpUDg&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=58" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 59일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-10 (토요일)</div>
+                    <div class="day-number">59일</div>
+                    <div class="day-reading">호세아 4-14장, 요엘 1-3장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=BSBbqYS42Vw&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=59" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 60일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-11 (일요일)</div>
+                    <div class="day-number">60일</div>
+                    <div class="day-reading">아모스 1-9장, 오바댜 1장, 요나 1-4장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=8ikJ_w06ecw&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=60" target="_blank" class="day-link">듣기</a>
+            </div>
+<!-- 61일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-12 (월요일)</div>
+                    <div class="day-number">61일</div>
+                    <div class="day-reading">미가 1-7장, 나훔 1-3장, 하박국 1-3장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=LjP7pEOjYvA&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=61" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 62일차 (오늘) -->
+            <div class="day-item today-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-13 (화요일)</div>
+                    <div class="day-number">62일</div>
+                    <div class="day-reading">스바냐 1-3장, 학개 1-2장, 스가랴 1-7장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=jOxLN7Y9D6Q&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=62" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 63일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-14 (수요일)</div>
+                    <div class="day-number">63일</div>
+                    <div class="day-reading">스가랴 8-14장, 말라기 1-4장, 마태복음 1-2장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=F2KDoUmGP_Y&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=63" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 64일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-15 (목요일)</div>
+                    <div class="day-number">64일</div>
+                    <div class="day-reading">마태복음 3-15장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=OmegclSgbs0&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=64" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 65일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-16 (금요일)</div>
+                    <div class="day-number">65일</div>
+                    <div class="day-reading">마태복음 16-28장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=aAzsKqJqW1w&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=65" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 66일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-17 (토요일)</div>
+                    <div class="day-number">66일</div>
+                    <div class="day-reading">마가복음 1-16장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=bDprbMeGthw&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=66" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 67일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-18 (일요일)</div>
+                    <div class="day-number">67일</div>
+                    <div class="day-reading">누가복음 1-11장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=DQn2QdEzXFg&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=67" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 68일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-19 (월요일)</div>
+                    <div class="day-number">68일</div>
+                    <div class="day-reading">누가복음 12-24장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=wtKSbJ7hawc&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=68" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 69일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-20 (화요일)</div>
+                    <div class="day-number">69일</div>
+                    <div class="day-reading">요한복음 1-11장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=KTWTOX7csmU&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=69" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 70일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-21 (수요일)</div>
+                    <div class="day-number">70일</div>
+                    <div class="day-reading">요한복음 12-21장, 사도행전 1-2장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=vQjEg1BaQNg&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=70" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 71일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-22 (목요일)</div>
+                    <div class="day-number">71일</div>
+                    <div class="day-reading">사도행전 3-14장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=HGyx6oqtTTY&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=71" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+          <!-- 72일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-23 (금요일)</div>
+                    <div class="day-number">72일</div>
+                    <div class="day-reading">사도행전 15-28장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=PCY_Bn6ALPg&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=72" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 73일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-24 (토요일)</div>
+                    <div class="day-number">73일</div>
+                    <div class="day-reading">로마서 1-16장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=KqwiZ6-5N8k&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=73" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 74일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-25 (일요일)</div>
+                    <div class="day-number">74일</div>
+                    <div class="day-reading">고린도전서 1-16장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=pvHOdbupvJE&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=74" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 75일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-26 (월요일)</div>
+                    <div class="day-number">75일</div>
+                    <div class="day-reading">고린도후서 1-13장, 갈라디아서 1-2장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=vSx3L3vvj1g&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=75" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 76일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-27 (화요일)</div>
+                    <div class="day-number">76일</div>
+                    <div class="day-reading">갈라디아서 3-6장, 에베소서 1-6장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=mEPViovpauc&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=76" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 77일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-28 (수요일)</div>
+                    <div class="day-number">77일</div>
+                    <div class="day-reading">빌립보서 1-4장, 골로새서 1-4장, 데살로니가전서 1-2장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=g9ZWxb2p9VA&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=77" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 78일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-29 (목요일)</div>
+                    <div class="day-number">78일</div>
+                    <div class="day-reading">데살로니가전서 3-5장, 데살로니가후서 1-3장, 디모데전서 1-6장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=xQc28oyU5LQ&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=78" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 79일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-30 (금요일)</div>
+                    <div class="day-number">79일</div>
+                    <div class="day-reading">디모데후서 1-4장, 디도서 1-3장, 빌레몬서 1장, 히브리서 1-3장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=6HuAiC9auA&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=79" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 80일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-05-31 (토요일)</div>
+                    <div class="day-number">80일</div>
+                    <div class="day-reading">히브리서 4-13장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=sJUwiqwlNq8&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=80" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 81일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-06-01 (일요일)</div>
+                    <div class="day-number">81일</div>
+                    <div class="day-reading">야고보서 1-5장, 베드로전서 1-5장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=kdNt-Z-ITmo&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=81" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 82일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-06-02 (월요일)</div>
+                    <div class="day-number">82일</div>
+                    <div class="day-reading">베드로후서 1-3장, 요한일서 1-5장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=e2OQvVU_un0&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=82" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 83일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-06-03 (화요일)</div>
+                    <div class="day-number">83일</div>
+                    <div class="day-reading">요한이서 1장, 요한삼서 1장, 유다서 1장, 요한계시록 1-6장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=1iYFMRDIUOQ&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=83" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 84일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-06-04 (수요일)</div>
+                    <div class="day-number">84일</div>
+                    <div class="day-reading">요한계시록 7-13장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=pEzXbxEb5uY&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=84" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 85일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-06-05 (목요일)</div>
+                    <div class="day-number">85일</div>
+                    <div class="day-reading">요한계시록 14-18장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=ydiNwUr1Mgo&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=85" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 86일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-06-06 (금요일)</div>
+                    <div class="day-number">86일</div>
+                    <div class="day-reading">요한계시록 19-22장</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=ji2IZXJJ_Kc&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=86" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 87일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-06-07 (토요일)</div>
+                    <div class="day-number">87일</div>
+                    <div class="day-reading">성경 종합정리 1</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=dT_Mitfxvj0&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=87" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 88일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-06-08 (일요일)</div>
+                    <div class="day-number">88일</div>
+                    <div class="day-reading">성경 종합정리 2</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=aGjH6q_aej4&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=88" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 89일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-06-09 (월요일)</div>
+                    <div class="day-number">89일</div>
+                    <div class="day-reading">성경 종합정리 3</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=gkPi4fT0dgk&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=89" target="_blank" class="day-link">듣기</a>
+            </div>
+            
+            <!-- 90일차 -->
+            <div class="day-item">
+                <div class="day-info">
+                    <div class="day-date">2025-06-10 (화요일)</div>
+                    <div class="day-number">90일</div>
+                    <div class="day-reading">성경 종합정리 4</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=wHQY85wNw9s&list=PLbR-BrshyLZsYtWUUP8Kq4AllS-xbG9BI&index=90" target="_blank" class="day-link">듣기</a>
+            </div>
+        </div>
+
+    
+    <script>
+        // 전체 일정 토글 기능
+        function toggleSchedule() {
+            const scheduleList = document.getElementById('scheduleList');
+            const toggleBtn = document.getElementById('toggleBtn');
+            
+            if (scheduleList.classList.contains('hidden')) {
+                scheduleList.classList.remove('hidden');
+                toggleBtn.textContent = '전체 일정 숨기기';
+            } else {
+                scheduleList.classList.add('hidden');
+                toggleBtn.textContent = '전체 일정 보기';
+            }
+        }
+    </script>
+</body>
+</html>
+            
+      
+             
